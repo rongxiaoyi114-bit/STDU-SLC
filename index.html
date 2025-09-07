@@ -43,12 +43,8 @@ a { text-decoration:none; color:inherit; }
 }
 #pdfTitle { font-size:20px; color:#1e73be; margin-bottom:10px; }
 #pdfDesc { font-size:14px; color:#333; margin-bottom:15px; }
-#pdfViewer {
-    width:100%;
-    height:calc(100vh - 250px); /* 自适应屏幕高度 */
-    border:1px solid #1e73be;
-    border-radius:6px;
-}
+#pdfViewer {width:100%;height:calc(100vh - 250px); /* 自适应屏幕高度 */border:1px solid #1e73be;border-radius:6px;}
+#imgViewer { width:100%; max-height:60vh; border:1px solid #1e73be; border-radius:6px; display:none; object-fit:contain; margin-bottom:15px; }
 
 /* 主体容器 */
 .container { max-width:1200px; margin:30px auto; padding:20px; display:flex; flex-wrap:wrap; gap:20px; }
@@ -223,6 +219,7 @@ function topFunction(){ document.documentElement.scrollTop=0; }
 </body>
 
 </html>
+
 
 
 
