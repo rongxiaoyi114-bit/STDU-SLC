@@ -133,23 +133,28 @@ footer { background:#1e73be; color:#fff; text-align:center; padding:15px 0; marg
 
 <script>
 // 二级菜单点击 PDF 并显示标题、说明和右侧简介
-document.querySelectorAll('.navbar ul li ul li a').forEach(link=>{
+document.querySelectorAll('.sidebar ul li ul li a').forEach(link=>{
     link.addEventListener('click', function(e){
+        e.preventDefault();
         const fileURL = this.getAttribute('href');
-        const title = this.dataset.title || "文件预览";
+        const title = this.dataset.title || "预览文件";
         const desc = this.dataset.desc || "";
-        if(fileURL.endsWith('.pdf')){
-            e.preventDefault();
-            // PDF显示
+
+        document.getElementById('pdfTitle').textContent = title;
+        document.getElementById('pdfDesc').textContent = desc;
+        document.getElementById('infoCard').innerHTML = `<h3>${title}</h3><p>${desc}</p >`;
+
+        if(fileURL.endsWith('.pdf')) {
+            document.getElementById('pdfViewer').style.display='block';
             document.getElementById('pdfViewer').src = fileURL;
-            // 页面上方标题和描述
-            document.getElementById('pdfTitle').textContent = title;
-            document.getElementById('pdfDesc').textContent = desc;
-            // 右侧简介更新
-            document.getElementById('infoCard').innerHTML = `<h3>${title}</h3><p>${desc}</p >`;
-            // 自动滚动到PDF区域
-            document.getElementById('pdfSection').scrollIntoView({behavior:'smooth'});
+            document.getElementById('imgViewer').style.display='none';
+        } else if(fileURL.match(/\.(jpg|jpeg|png|gif)$/i)) {
+            document.getElementById('imgViewer').style.display='block';
+            document.getElementById('imgViewer').src = fileURL;
+            document.getElementById('pdfViewer').style.display='none';
         }
+
+        document.getElementById('pdfViewer').scrollIntoView({behavior:'smooth'});
     });
 });
 
@@ -216,6 +221,7 @@ function topFunction(){ document.documentElement.scrollTop=0; }
 </body>
 
 </html>
+
 
 
 
