@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>石家庄铁道大学语言文化学院 国家级教学成果奖申报</title>
+<style>
+body, html { margin:0; padding:0; font-family:"微软雅黑"; background:#f8f9fa; scroll-behavior:smooth;}
+a { text-decoration:none; color:inherit; }
+
+/* 顶部导航 */
+.navbar {
+  background: linear-gradient(90deg,#1e73be,#3a9bdc);
+  color:#fff;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 20px; position:sticky; top:0; z-index:1000; flex-wrap:wrap;
+}
+.navbar-left {
+  display:flex; align-items:center;
+}
+.navbar-left img { width:200px; height:60px; margin-right:15px; }
+.navbar h1 { font-size:22px; margin:0; font-weight:bold; }
+
+/* 导航菜单 */
+.navbar ul { list-style:none; display:flex; margin:0; padding:0; flex-wrap:wrap; }
+.navbar ul li { position:relative; margin-left:20px; }
+.navbar ul li a { display:block; padding:5px 10px; color:#fff; transition:0.3s; }
+.navbar ul li a:hover { background:#fff; color:#1e73be; border-radius:4px; }
+
+/* 二级菜单 */
+.navbar ul li ul {
+  display:none; position:absolute; top:35px; left:0;
+  background:#1e73be; border-radius:4px; min-width:160px;
+}
+.navbar ul li:hover ul { display:block; }
+.navbar ul li ul li a { padding:5px 15px; }
+.navbar ul li ul li a:hover { background:#fff; color:#1e73be; }
+
+/* PDF展示区 */
+#pdfSection {
+    margin-top:20px;
+}
+#pdfTitle { font-size:20px; color:#1e73be; margin-bottom:10px; }
+#pdfDesc { font-size:14px; color:#333; margin-bottom:15px; }
+#pdfViewer {
+    width:100%;
+    height:calc(100vh - 250px); /* 自适应屏幕高度 */
+    border:1px solid #1e73be;
+    border-radius:6px;
+}
+
+/* 主体容器 */
+.container { max-width:1200px; margin:30px auto; padding:20px; display:flex; flex-wrap:wrap; gap:20px; }
+
+/* 右侧简介卡片 */
+.infoCard { flex:1; min-width:280px; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.2); padding:15px; background:#f0f8ff; }
+
+/* 底部 */
+footer { background:#1e73be; color:#fff; text-align:center; padding:15px 0; margin-top:20px; }
+
+/* 返回顶部按钮 */
+#topBtn {
+  display:none; position:fixed; bottom:50px; right:30px; z-index:100;
+  font-size:18px; background:#1e73be; color:#fff; border:none; outline:none; cursor:pointer;
+  padding:10px 15px; border-radius:50%; transition:0.3s;
+}
+#topBtn:hover { background:#145a8d; }
+
+/* 响应式 */
+@media(max-width:900px){ #pdfViewer {height:400px;} .infoCard {width:100%;} }
+@media(max-width:600px){ .navbar-left h1{font-size:18px;} }
+</style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<div class="navbar">
+  <div class="navbar-left">
+    <img src="2.jpg" alt="院徽">
+    <h1>语言文化学院教学成果奖申报</h1>
+  </div>
+  <ul>
+    <li><a href="">首页</a></li>
+    <li>
+      <a href="#">申报信息</a>
+      <ul>
+        <li><a href="1.pdf"data-title="申报条件" data-desc="国家级教学成果奖申报条件说明">申报条件</a></li>
+        <li><a href="1.pdf"data-title="申报流程" data-desc="详细申报流程及时间节点">申报流程</a></li>
+        <li><a href="1.pdf"data-title="申报材料" data-desc="提交申报所需材料清单及模板">申报材料</a></li>
+      </ul>
+    </li>
+    <li>
+      获奖案例
+      <ul>
+        <li>案例1</li>
+        <li>案例2</li>
+      </ul>
+    </li>
+    <li>
+      通知公告
+      <ul>
+        <li>公告1</li>
+        <li>公告2</li>
+      </ul>
+    </li>
+    <li>联系我们</li>
+  </ul>
+</div>
+
+<!-- 主体内容 -->
+<div class="container">
+  <div style="flex:3; min-width:300px;">
+    <div id="pdfSection">
+      <div id="pdfTitle">请选择文件查看</div>
+      <div id="pdfDesc">点击左上方菜单的二级栏目，即可在下方查看对应 PDF 文件及说明。</div>
+      <iframe id="pdfViewer"></iframe>
+    </div>
+  </div>
+  
+  <div class="infoCard" id="infoCard">
+    <h3>文件简介</h3>
+    <p>右侧将显示所选 PDF 的详细说明信息，让用户快速了解文件内容。</p >
+  </div>
+</div>
+
+<!-- 底部 -->
+<footer>
+  2025 石家庄铁道大学语言文化学院 国家级教学成果奖申报
+</footer>
+
+<!-- 返回顶部按钮 -->
+<button id="topBtn" onclick="topFunction()">↑</button>
+
+<script>
+// 二级菜单点击 PDF 并显示标题、说明和右侧简介
+document.querySelectorAll('.navbar ul li ul li a').forEach(link=>{
+    link.addEventListener('click', function(e){
+        const fileURL = this.getAttribute('href');
+        const title = this.dataset.title || "文件预览";
+        const desc = this.dataset.desc || "";
+        if(fileURL.endsWith('.pdf')){
+            e.preventDefault();
+            // PDF显示
+            document.getElementById('pdfViewer').src = fileURL;
+            // 页面上方标题和描述
+            document.getElementById('pdfTitle').textContent = title;
+            document.getElementById('pdfDesc').textContent = desc;
+            // 右侧简介更新
+            document.getElementById('infoCard').innerHTML = `<h3>${title}</h3><p>${desc}</p >`;
+            // 自动滚动到PDF区域
+            document.getElementById('pdfSection').scrollIntoView({behavior:'smooth'});
+        }
+    });
+});
+
+// ----------------- 二级菜单延迟显示/隐藏 -----------------
+document.querySelectorAll('.navbar ul li').forEach(li => {
+    let timer;
+    const submenu = li.querySelector('ul');
+    if(submenu){
+        li.addEventListener('mouseenter', () => {
+            clearTimeout(timer);
+            submenu.style.display = 'block';
+            setTimeout(()=>{ submenu.style.opacity=1; submenu.style.transform='translateY(0)'; },10);
+        });
+        li.addEventListener('mouseleave', () => {
+            timer = setTimeout(() => {
+                submenu.style.opacity=0;
+                submenu.style.transform='translateY(-10px)';
+                setTimeout(()=>{submenu.style.display='none';},300);
+            }, 1000); // 1秒延迟
+        });
+    }
+});
+
+// ----------------- PDF预览 -----------------
+document.querySelectorAll('.navbar ul li ul li a').forEach(link=>{
+    link.addEventListener('click', function(e){
+        e.preventDefault(); // 防止直接跳转
+        const fileURL = this.getAttribute('href');
+        document.getElementById('pdfFrame').src = fileURL;
+        document.getElementById('pdfPreview').style.display='block';
+    });
+});
+function closePDF(){
+    document.getElementById('pdfPreview').style.display='none';
+    document.getElementById('pdfFrame').src='';
+}
+
+// ----------------- Banner轮播 -----------------
+let index = 0;
+const slides = document.querySelectorAll('.banner img');
+const texts = document.querySelectorAll('.banner-text');
+setInterval(()=>{
+    slides[index].classList.remove('active');
+    texts[index].style.opacity=0;
+    index=(index+1)%slides.length;
+    slides[index].classList.add('active');
+    texts[index].style.opacity=1;
+},4000);
+
+
+// 返回顶部按钮
+const topBtn = document.getElementById("topBtn");
+window.onscroll = function(){
+    if(document.body.scrollTop>200 || document.documentElement.scrollTop>200){
+        topBtn.style.display="block";
+    } else {
+        topBtn.style.display="none";
+    }
+};
+function topFunction(){ document.documentElement.scrollTop=0; }
+</script>
+
+
+</body>
+</html>
